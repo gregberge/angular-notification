@@ -1,0 +1,44 @@
+<!doctype html>
+<html ng-app="myApp">
+  <head>
+    <title>Angular notification example</title>
+  </head>
+  <body ng-controller="MyController">
+    <button ng-click="notify()">Notify</button>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../angular-notification.js"></script>
+    <script>
+    angular.module('myApp', ['notification'])
+    .controller('MyController', function ($scope, Notification) {
+      var p = [];
+
+      $scope.notify = function notify() {
+        createNotification();
+      };
+
+      function createNotification() {
+        var notification = new Notification('New message', {
+          body: 'You have a new message.',
+          delay: 2000
+        });
+
+        notification.$on('show', function () {
+          console.log('My notification is displayed.');
+        });
+
+        notification.$on('click', function () {
+          console.log('The user has clicked in my notification.');
+        });
+
+        notification.$on('close', function () {
+          console.log('The user has closed my notification.');
+        });
+
+        notification.$on('error', function () {
+          console.log('The notification encounters an error.');
+        });
+      }
+    });
+    </script>
+  </body>
+</html>
