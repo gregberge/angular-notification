@@ -1,4 +1,4 @@
-# angular-notification
+# angular-notification [![Build Status](https://travis-ci.org/neoziro/angular-notification.png?branch=master)](https://travis-ci.org/neoziro/angular-notification)
 
 Notification service for Angular using native HTML5 API.
 
@@ -30,7 +30,7 @@ new Notification('title', {
 })
 ```
 
-## close()
+### close()
 
 Close the notification.
 
@@ -39,11 +39,13 @@ var notification = new Notification('hello');
 notification.close();
 ```
 
-## $on(name, listener)
+### $on(name, listener)
 
 Listen an event on the notification. Using this method, the listener is automatically wrapped in an `$apply()`.
 
 The signature is the same as the angular `$scope.$on` signature, it returns the deregistration function.
+
+Avalaible examples are 'click', 'show', 'close' and 'error'.
 
 ```js
 var notification = new Notification('hello');
@@ -55,7 +57,7 @@ var deregister = notification.$on('click', function () {
 deregister();
 ```
 
-## Notification.requestPermission(callback)
+### Notification.requestPermission(callback)
 
 Request explicitly the permission to display notification, [more info in the official API](https://developer.mozilla.org/en-US/docs/Web/API/Notification.requestPermission).
 
