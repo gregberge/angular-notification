@@ -2,6 +2,8 @@
 
 Notification service for Angular using native HTML5 API.
 
+![notification example](https://f.cloud.github.com/assets/266302/2423762/a38113ac-ab9e-11e3-8e8a-2e4fe299e9f5.png)
+
 ## Install
 
 ### Using bower
