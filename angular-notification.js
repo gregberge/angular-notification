@@ -101,6 +101,8 @@ function NotificationProvider() {
      */
 
     NgNotification.prototype.$on = function $on(name, listener) {
+      var self = this;
+
       // If the notification is not ready, we cache the event.
       if (! this.baseNotification) return this._events.push([name, listener]);
 
@@ -109,7 +111,7 @@ function NotificationProvider() {
       function applyListener() {
         var args = arguments;
         $rootScope.$apply(function () {
-          listener.apply(null, args);
+          listener.apply(self, args);
         });
       }
 
