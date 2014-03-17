@@ -1,4 +1,4 @@
-/*! Angular notification v0.2.0 | (c) 2013 Greg Bergé | License MIT */
+/*! Angular notification v0.2.1 | (c) 2013 Greg Bergé | License MIT */
 
 angular
 .module('notification', [])
