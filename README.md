@@ -27,7 +27,10 @@ angular.module('controllers.notification', ['notification'])
 
 Create a new notification, the signature is the same as [the Web Notification API](https://developer.mozilla.org/en/docs/Web/API/notification).
 
-Angular-notification provides some sugar to the default API, the permission is requested automatically. There is also a "delay" option to specify a delay (in ms) after the notification is automatically closed.
+Angular-notification provides some sugar to the default API, the permission is requested automatically. There is some options in addition to that already present in the official API:
+
+- "delay": Specify a delay (in ms) after the notification is automatically closed. Default `null`.
+- "focusWindowOnClick": Focus the window when the notification is clicked (works only on Chrome, Firefox prevent this for security issue). Default `true`.
 
 ```js
 new Notification('title', {
@@ -36,7 +39,8 @@ new Notification('title', {
   lang: 'en',
   tag: 'my-tag',
   icon: '/my-icon.jpg',
-  delay: 1000 // in ms
+  delay: 1000, // in ms
+  focusWindowOnClick: true // focus the window on click
 })
 ```
 

@@ -34,7 +34,8 @@ describe('Notification provider', function () {
       $window.Notification.respondPermission('granted');
 
       expect($window.Notification).to.be.calledWith('title', {
-        foo: 'bar'
+        foo: 'bar',
+        focusWindowOnClick: true
       });
     });
   });

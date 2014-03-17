@@ -57,13 +57,21 @@ function NotificationProvider() {
 
       function createNotification() {
         // Extend options with default provider options.
-        angular.extend(options, provider.options || {});
+        angular.extend(options, provider.options || {}, {
+          focusWindowOnClick: true
+        });
 
         // Create a base notification.
         self.baseNotification = new $window.Notification(title, options);
 
         // Close notification after specified delay.
         if (options.delay) setTimeout(angular.bind(self, self.close), options.delay);
+
+        // Focus window on click.
+        if (options.focusWindowOnClick)
+          self.$on('click', function () {
+            $window.focus();
+          });
 
         // Re-bind events.
         self._events.forEach(function (args) {
