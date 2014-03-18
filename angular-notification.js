@@ -141,7 +141,7 @@ function NotificationProvider() {
       $window.Notification.requestPermission(function (permission) {
         // Persist permission.
         $window.Notification.permission = $window.Notification.permission || permission;
-        callback(permission);
+        if (callback) callback(permission);
       });
     };
 
