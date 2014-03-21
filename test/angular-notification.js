@@ -40,17 +40,6 @@ describe('Notification provider', function () {
     });
   });
 
-  it('should return an error if not supported', function () {
-    $window.Notification = null;
-
-    function createNotification() {
-      new Notification();
-    };
-
-    expect(createNotification)
-      .to.throw('This browser does not support desktop notification.');
-  });
-
   describe('#requestPermission', function () {
     it('should request if permission is "default"', function () {
       $window.Notification.permission = 'default';

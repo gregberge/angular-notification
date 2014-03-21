@@ -25,14 +25,10 @@ function NotificationProvider() {
   function notificationService($window, $rootScope) {
 
     /**
-     * Check notification support.
-     * Throws an error if notification are not supported.
+     * Check support.
      */
 
-    function checkSupport() {
-      if (! $window.Notification)
-        throw new Error('This browser does not support desktop notification.');
-    }
+    var isSupported = !! $window.Notification;
 
     /**
      * Create a new Notification.
@@ -42,11 +38,11 @@ function NotificationProvider() {
      */
 
     function NgNotification(title, options) {
+      if (! isSupported) return false;
+
       options = options || {};
 
       var self = this;
-
-      checkSupport();
 
       // Events cache.
       this._events = [];
@@ -136,7 +132,7 @@ function NotificationProvider() {
      */
 
     NgNotification.requestPermission = function (callback) {
-      checkSupport();
+      if (! isSupported) return false;
 
       $window.Notification.requestPermission(function (permission) {
         // Persist permission.
