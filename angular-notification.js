@@ -25,12 +25,6 @@ function NotificationProvider() {
   function notificationService($window, $rootScope) {
 
     /**
-     * Check support.
-     */
-
-    var isSupported = !! $window.Notification;
-
-    /**
      * Create a new Notification.
      *
      * @param {String} title
@@ -38,7 +32,7 @@ function NotificationProvider() {
      */
 
     function NgNotification(title, options) {
-      if (! isSupported) return false;
+      if (! $window.Notification) return false;
 
       options = options || {};
 
@@ -132,7 +126,7 @@ function NotificationProvider() {
      */
 
     NgNotification.requestPermission = function (callback) {
-      if (! isSupported) return false;
+      if (! $window.Notification) return false;
 
       $window.Notification.requestPermission(function (permission) {
         // Persist permission.
