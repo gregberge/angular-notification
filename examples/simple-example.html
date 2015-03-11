@@ -1,44 +1,56 @@
 <!doctype html>
 <html ng-app="myApp">
-  <head>
+<head>
     <title>Angular notification example</title>
-  </head>
-  <body ng-controller="MyController">
-    <button ng-click="notify()">Notify</button>
-    <script src="../bower_components/angular/angular.js"></script>
-    <script src="../angular-notification.js"></script>
-    <script>
+</head>
+<body ng-controller="MyController">
+<button ng-click="notify()">Notify</button>
+<button ng-click="askPermision()">Ask for Permision</button>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../angular-notification.js"></script>
+<script>
     angular.module('myApp', ['notification'])
-    .controller('MyController', function ($scope, Notification) {
-      var p = [];
+            .controller('MyController', function ($scope, Notification, $log) {
+                var p = [];
 
-      $scope.notify = function notify() {
-        createNotification();
-      };
+                $scope.notify = function notify() {
+                    createNotification();
+                };
 
-      function createNotification() {
-        var notification = new Notification('New message', {
-          body: 'You have a new message.',
-          delay: 2000
-        });
+                $scope.askPermision = function() {
+                    Notification.requestPermission().then(function success(value) {
+                        new Notification('Notification allowed', {
+                            body : value,
+                            delay: 5000
+                        });
+                    }, function error() {
+                        $log.error("Can't request for notification");
+                    })
+                };
 
-        notification.$on('show', function () {
-          console.log('My notification is displayed.');
-        });
+                function createNotification() {
+                    var notification = new Notification('New message', {
+                        body: 'You have a new message.',
+                        delay: 2000
+                    });
 
-        notification.$on('click', function () {
-          console.log('The user has clicked in my notification.');
-        });
+                    notification.$on('show', function () {
+                        console.log('My notification is displayed.');
+                    });
 
-        notification.$on('close', function () {
-          console.log('The user has closed my notification.');
-        });
+                    notification.$on('click', function () {
+                        console.log('The user has clicked in my notification.');
+                    });
 
-        notification.$on('error', function () {
-          console.log('The notification encounters an error.');
-        });
-      }
-    });
-    </script>
-  </body>
+                    notification.$on('close', function () {
+                        console.log('The user has closed my notification.');
+                    });
+
+                    notification.$on('error', function () {
+                        console.log('The notification encounters an error.');
+                    });
+                }
+            });
+</script>
+</body>
 </html>
