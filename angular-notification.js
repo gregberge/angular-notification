@@ -72,10 +72,12 @@ function NotificationProvider() {
         self._events = [];
       }
 
-      if ($window.Notification.permission === 'granted')
+      if ($window.Notification.permission === 'granted') {
         return createNotification();
-      else if ($window.Notification.permission !== 'denied')
+      }
+      else if ($window.Notification.permission !== 'denied') {
         NgNotification.requestPermission().then(createNotification);
+      }
     }
 
     /**
@@ -126,6 +128,7 @@ function NotificationProvider() {
 
     NgNotification.requestPermission = function () {
         var deferred = $q.defer();
+
         if (! $window.Notification)
             deferred.reject();
 
