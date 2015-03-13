@@ -121,8 +121,7 @@ function NotificationProvider() {
 
     /**
      * Static method to request permission.
-     *
-     * @param {Function} callback
+     * It returns a promise
      */
 
     NgNotification.requestPermission = function () {
