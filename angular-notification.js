@@ -16,13 +16,13 @@ function NotificationProvider() {
    * Expose Notification service.
    */
 
-  this.$get = ['$window', '$rootScope', notificationService];
+  this.$get = ['$window', '$rootScope', '$q', notificationService];
 
   /**
    * Create a new Notification service.
    */
 
-  function notificationService($window, $rootScope) {
+  function notificationService($window, $rootScope, $q) {
 
     /**
      * Create a new Notification.
@@ -75,7 +75,7 @@ function NotificationProvider() {
       if ($window.Notification.permission === 'granted')
         return createNotification();
       else if ($window.Notification.permission !== 'denied')
-        NgNotification.requestPermission(createNotification);
+        NgNotification.requestPermission().then(createNotification);
     }
 
     /**
@@ -125,14 +125,17 @@ function NotificationProvider() {
      * @param {Function} callback
      */
 
-    NgNotification.requestPermission = function (callback) {
-      if (! $window.Notification) return false;
+    NgNotification.requestPermission = function () {
+        var deferred = $q.defer();
+        if (! $window.Notification)
+            deferred.reject();
 
-      $window.Notification.requestPermission(function (permission) {
-        // Persist permission.
-        $window.Notification.permission = $window.Notification.permission || permission;
-        if (callback) callback(permission);
-      });
+        $window.Notification.requestPermission(function (permission) {
+            // Persist permission.
+            $window.Notification.permission = $window.Notification.permission || permission;
+            deferred.resolve($window.Notification.permission);
+        });
+        return deferred.promise;
     };
 
     return NgNotification;
