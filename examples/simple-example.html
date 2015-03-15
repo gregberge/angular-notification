@@ -35,19 +35,19 @@
                     });
 
                     notification.$on('show', function () {
-                        console.log('My notification is displayed.');
+                        $log.debug('My notification is displayed.');
                     });
 
                     notification.$on('click', function () {
-                        console.log('The user has clicked in my notification.');
+                        $log.debug('The user has clicked in my notification.');
                     });
 
                     notification.$on('close', function () {
-                        console.log('The user has closed my notification.');
+                        $log.debug('The user has closed my notification.');
                     });
 
                     notification.$on('error', function () {
-                        console.log('The notification encounters an error.');
+                        $log.debug('The notification encounters an error.');
                     });
                 }
             });

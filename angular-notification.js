@@ -127,17 +127,16 @@ function NotificationProvider() {
      */
 
     NgNotification.requestPermission = function () {
-        var deferred = $q.defer();
+        return $q(function (resolve, reject) {
+            if (! $window.Notification)
+                reject();
 
-        if (! $window.Notification)
-            deferred.reject();
-
-        $window.Notification.requestPermission(function (permission) {
-            // Persist permission.
-            $window.Notification.permission = $window.Notification.permission || permission;
-            deferred.resolve($window.Notification.permission);
+            $window.Notification.requestPermission(function (permission) {
+                // Persist permission.
+                $window.Notification.permission = $window.Notification.permission || permission;
+                resolve($window.Notification.permission);
+            });
         });
-        return deferred.promise;
     };
 
     return NgNotification;
