@@ -1,7 +1,7 @@
 var expect = chai.expect;
 
 describe('Notification provider', function () {
-  var $window, Notification, $q;
+  var $window, Notification;
 
   beforeEach(module('notification'));
 
@@ -12,7 +12,6 @@ describe('Notification provider', function () {
   beforeEach(inject(function ($injector) {
     $window = $injector.get('$window');
     Notification = $injector.get('Notification');
-    $q = $injector.get('$q');
     $rootScope = $injector.get('$rootScope');
 
     $window.Notification = sinon.spy();
