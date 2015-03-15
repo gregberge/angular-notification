@@ -12,6 +12,7 @@ describe('Notification provider', function () {
   beforeEach(inject(function ($injector) {
     $window = $injector.get('$window');
     Notification = $injector.get('Notification');
+    $rootScope = $injector.get('$rootScope');
 
     $window.Notification = sinon.spy();
     $window.Notification.prototype.addEventListener = sinon.spy();
@@ -19,12 +20,15 @@ describe('Notification provider', function () {
     $window.Notification.requestPermission = sinon.spy(requestPermission);
     $window.Notification.respondPermission = respondPermission;
 
+
+    /*var requestPromise = $q.defer();*/
     function requestPermission(callback) {
       $window.Notification._permissionCb = callback;
     }
 
     function respondPermission(permission) {
       $window.Notification._permissionCb(permission);
+      $rootScope.$digest();
     }
   }));
 
@@ -32,7 +36,6 @@ describe('Notification provider', function () {
     it('should define default options', function () {
       new Notification('title');
       $window.Notification.respondPermission('granted');
-
       expect($window.Notification).to.be.calledWith('title', {
         foo: 'bar',
         focusWindowOnClick: true

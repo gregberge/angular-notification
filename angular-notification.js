@@ -16,13 +16,13 @@ function NotificationProvider() {
    * Expose Notification service.
    */
 
-  this.$get = ['$window', '$rootScope', notificationService];
+  this.$get = ['$window', '$rootScope', '$q', notificationService];
 
   /**
    * Create a new Notification service.
    */
 
-  function notificationService($window, $rootScope) {
+  function notificationService($window, $rootScope, $q) {
 
     /**
      * Create a new Notification.
@@ -72,10 +72,12 @@ function NotificationProvider() {
         self._events = [];
       }
 
-      if ($window.Notification.permission === 'granted')
+      if ($window.Notification.permission === 'granted') {
         return createNotification();
-      else if ($window.Notification.permission !== 'denied')
-        NgNotification.requestPermission(createNotification);
+      }
+      else if ($window.Notification.permission !== 'denied') {
+        NgNotification.requestPermission().then(createNotification);
+      }
     }
 
     /**
@@ -121,18 +123,20 @@ function NotificationProvider() {
 
     /**
      * Static method to request permission.
-     *
-     * @param {Function} callback
+     * It returns a promise
      */
 
-    NgNotification.requestPermission = function (callback) {
-      if (! $window.Notification) return false;
+    NgNotification.requestPermission = function () {
+        return $q(function (resolve, reject) {
+            if (! $window.Notification)
+                reject();
 
-      $window.Notification.requestPermission(function (permission) {
-        // Persist permission.
-        $window.Notification.permission = $window.Notification.permission || permission;
-        if (callback) callback(permission);
-      });
+            $window.Notification.requestPermission(function (permission) {
+                // Persist permission.
+                $window.Notification.permission = $window.Notification.permission || permission;
+                resolve($window.Notification.permission);
+            });
+        });
     };
 
     return NgNotification;
