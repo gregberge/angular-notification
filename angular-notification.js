@@ -47,9 +47,9 @@ function $notificationProvider() {
 
       function createNotification() {
         // Extend options with default provider options.
-        angular.extend(options, provider.options || {}, {
+        options = angular.extend({
           focusWindowOnClick: true
-        });
+        }, provider.options || {}, options);
 
         // Create a base notification.
         self.baseNotification = new $window.Notification(title, options);

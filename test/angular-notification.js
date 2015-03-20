@@ -41,6 +41,15 @@ describe('Notification provider', function () {
         focusWindowOnClick: true
       });
     });
+
+    it('should extend options in the correct order', function () {
+      $notification('title', {foo: 'x', focusWindowOnClick: false});
+      $window.Notification.respondPermission('granted');
+      expect($window.Notification).to.be.calledWith('title', {
+        foo: 'x',
+        focusWindowOnClick: false
+      });
+    });
   });
 
   describe('#requestPermission', function () {
