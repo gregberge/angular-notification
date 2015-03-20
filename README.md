@@ -16,14 +16,14 @@ bower install angular-notification
 
 ```js
 angular.module('controllers.notification', ['notification'])
-.controller('NotificationCtrl', function (Notification) {
-  new Notification('New message', {
+.controller('NotificationCtrl', function ($notification) {
+  $notification('New message', {
     body: 'You have a new message.'
   });
 })
 ```
 
-### new Notification(title, options)
+### $notification(title, options)
 
 Create a new notification, the signature is the same as [the Web Notification API](https://developer.mozilla.org/en/docs/Web/API/notification).
 
@@ -33,7 +33,7 @@ Angular-notification provides some sugar to the default API, the permission is r
 - "focusWindowOnClick": Focus the window when the notification is clicked (works only on Chrome, Firefox prevent this for security issue). Default `true`.
 
 ```js
-new Notification('title', {
+$notification('title', {
   body: 'message',
   dir: 'auto',
   lang: 'en',
@@ -44,16 +44,24 @@ new Notification('title', {
 })
 ```
 
-### close()
+### $notificationProvider.setOptions(options)
+
+Set default options.
+
+```js
+$notificationProvider.setOptions({icon: '/my-icon.jpg'});
+```
+
+### notification.close()
 
 Close the notification.
 
 ```js
-var notification = new Notification('hello');
+var notification = $notification('hello');
 notification.close();
 ```
 
-### $on(name, listener)
+### notification.$on(name, listener)
 
 Listen an event on the notification. Using this method, the listener is automatically wrapped in an `$apply()`.
 
@@ -62,7 +70,7 @@ The signature is the same as the angular `$scope.$on` signature, it returns the 
 Avalaible examples are 'click', 'show', 'close' and 'error'.
 
 ```js
-var notification = new Notification('hello');
+var notification = $notification('hello');
 var deregister = notification.$on('click', function () {
   console.log('User has clicked.');
 });
@@ -71,12 +79,12 @@ var deregister = notification.$on('click', function () {
 deregister();
 ```
 
-### Notification.requestPermission()
+### $notification.requestPermission()
 
 Request explicitly the permission to display notification, [more info in the official API](https://developer.mozilla.org/en-US/docs/Web/API/Notification.requestPermission).
 
 ```js
-Notification.requestPermission()
+$notification.requestPermission()
 .then(function (permission) {
   console.log(permission); // default, granted, denied
 });

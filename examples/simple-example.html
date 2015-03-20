@@ -10,7 +10,7 @@
 <script src="../angular-notification.js"></script>
 <script>
     angular.module('myApp', ['notification'])
-            .controller('MyController', function ($scope, Notification, $log) {
+            .controller('MyController', function ($scope, $notification, $log) {
                 var p = [];
 
                 $scope.notify = function notify() {
@@ -18,7 +18,8 @@
                 };
 
                 $scope.askPermision = function() {
-                    Notification.requestPermission().then(function success(value) {
+                    $notification.requestPermission()
+                    .then(function success(value) {
                         new Notification('Notification allowed', {
                             body : value,
                             delay: 5000
@@ -29,7 +30,7 @@
                 };
 
                 function createNotification() {
-                    var notification = new Notification('New message', {
+                    var notification = $notification('New message', {
                         body: 'You have a new message.',
                         delay: 2000
                     });

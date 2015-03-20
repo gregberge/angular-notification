@@ -1,17 +1,17 @@
 var expect = chai.expect;
 
 describe('Notification provider', function () {
-  var $window, Notification;
+  var $window, $notification;
 
   beforeEach(module('notification'));
 
-  beforeEach(module(function (NotificationProvider) {
-    NotificationProvider.setOptions({ foo: 'bar' });
+  beforeEach(module(function ($notificationProvider) {
+    $notificationProvider.setOptions({ foo: 'bar' });
   }));
 
   beforeEach(inject(function ($injector) {
     $window = $injector.get('$window');
-    Notification = $injector.get('Notification');
+    $notification = $injector.get('$notification');
     $rootScope = $injector.get('$rootScope');
 
     $window.Notification = sinon.spy();
@@ -34,7 +34,7 @@ describe('Notification provider', function () {
 
   describe('#setOptions', function () {
     it('should define default options', function () {
-      new Notification('title');
+      $notification('title');
       $window.Notification.respondPermission('granted');
       expect($window.Notification).to.be.calledWith('title', {
         foo: 'bar',
@@ -46,19 +46,19 @@ describe('Notification provider', function () {
   describe('#requestPermission', function () {
     it('should request if permission is "default"', function () {
       $window.Notification.permission = 'default';
-      new Notification();
+      $notification();
       expect($window.Notification.requestPermission).to.be.called;
     });
 
     it('should request if permission is not defined', function () {
       $window.Notification.permission = undefined;
-      new Notification();
+      $notification();
       expect($window.Notification.requestPermission).to.be.called;
     });
 
     it('should set permission', function () {
       $window.Notification.permission = undefined;
-      new Notification();
+      $notification();
       $window.Notification.respondPermission('granted');
       expect($window.Notification.requestPermission).to.be.called;
       expect($window.Notification.permission).to.equal('granted');
@@ -68,14 +68,14 @@ describe('Notification provider', function () {
   describe('#$on', function () {
     it('should register events when permission is "granted" at start', function () {
       $window.Notification.permission = 'granted';
-      var notification = new Notification();
+      var notification = $notification();
       notification.$on('close', function () {});
 
       expect(notification.baseNotification.addEventListener).to.be.calledWith('close');
     });
 
     it('should register events when permission is not "granted" at start', function () {
-      var notification = new Notification();
+      var notification = $notification();
       notification.$on('close', function () {});
       $window.Notification.respondPermission('granted');
       expect(notification.baseNotification.addEventListener).to.be.calledWith('close');
@@ -84,13 +84,13 @@ describe('Notification provider', function () {
 
   describe('#close', function () {
     it('should do nothing if notification is not created', function () {
-      var notification = new Notification();
+      var notification = $notification();
       notification.close();
     });
 
     it('should close notification if created', function () {
       $window.Notification.permission = 'granted';
-      var notification = new Notification();
+      var notification = $notification();
       notification.close();
       expect(notification.baseNotification.close).to.be.called;
     });
@@ -109,7 +109,7 @@ describe('Notification provider', function () {
 
     it('should be possible to set a delay', function () {
       $window.Notification.permission = 'granted';
-      var notification = new Notification('title', { delay: 1000 });
+      var notification = $notification('title', { delay: 1000 });
       expect(notification.baseNotification.close).to.not.be.called;
 
       clock.tick(1001);

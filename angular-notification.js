@@ -2,27 +2,27 @@
 
 angular
 .module('notification', [])
-.provider('Notification', NotificationProvider);
+.provider('$notification', $notificationProvider);
 
 /**
  * Notification provider.
  * Configure the default notification options.
  */
 
-function NotificationProvider() {
+function $notificationProvider() {
   var provider = this;
 
   /**
    * Expose Notification service.
    */
 
-  this.$get = ['$window', '$rootScope', '$q', notificationService];
+  this.$get = ['$window', '$rootScope', '$q', $notificationFactory];
 
   /**
    * Create a new Notification service.
    */
 
-  function notificationService($window, $rootScope, $q) {
+  function $notificationFactory($window, $rootScope, $q) {
 
     /**
      * Create a new Notification.
@@ -32,7 +32,7 @@ function NotificationProvider() {
      */
 
     function NgNotification(title, options) {
-      if (! $window.Notification) return false;
+      if (!$window.Notification) return false;
 
       options = options || {};
 
@@ -74,8 +74,7 @@ function NotificationProvider() {
 
       if ($window.Notification.permission === 'granted') {
         return createNotification();
-      }
-      else if ($window.Notification.permission !== 'denied') {
+      } else if ($window.Notification.permission !== 'denied') {
         NgNotification.requestPermission().then(createNotification);
       }
     }
@@ -96,7 +95,7 @@ function NotificationProvider() {
       var self = this;
 
       // If the notification is not ready, we cache the event.
-      if (! this.baseNotification) return this._events.push([name, listener]);
+      if (!this.baseNotification) return this._events.push([name, listener]);
 
       this.baseNotification.addEventListener(name, applyListener);
 
@@ -128,7 +127,7 @@ function NotificationProvider() {
 
     NgNotification.requestPermission = function () {
         return $q(function (resolve, reject) {
-            if (! $window.Notification)
+            if (!$window.Notification)
                 reject();
 
             $window.Notification.requestPermission(function (permission) {
@@ -139,7 +138,9 @@ function NotificationProvider() {
         });
     };
 
-    return NgNotification;
+    return function $notification(title, options) {
+      return new NgNotification(title, options);
+    };
   }
 
   /**
