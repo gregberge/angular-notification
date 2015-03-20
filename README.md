@@ -16,6 +16,12 @@ Notification service for Angular using native HTML5 API.
 bower install angular-notification
 ```
 
+### Using npm
+
+```
+npm install angular-notification
+```
+
 ## Usage
 
 ```js
