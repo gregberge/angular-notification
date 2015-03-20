@@ -1,4 +1,8 @@
-# angular-notification [![Build Status](https://travis-ci.org/neoziro/angular-notification.png?branch=master)](https://travis-ci.org/neoziro/angular-notification)
+# angular-notification
+
+[![Build Status](https://travis-ci.org/neoziro/angular-notification.svg?branch=master)](https://travis-ci.org/neoziro/angular-notification)
+[![Dependency Status](https://david-dm.org/neoziro/angular-notification.svg?theme=shields.io)](https://david-dm.org/neoziro/angular-notification)
+[![devDependency Status](https://david-dm.org/neoziro/angular-notification/dev-status.svg?theme=shields.io)](https://david-dm.org/neoziro/angular-notification#info=devDependencies)
 
 Notification service for Angular using native HTML5 API.
 
