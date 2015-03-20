@@ -71,12 +71,13 @@ var deregister = notification.$on('click', function () {
 deregister();
 ```
 
-### Notification.requestPermission(callback)
+### Notification.requestPermission()
 
 Request explicitly the permission to display notification, [more info in the official API](https://developer.mozilla.org/en-US/docs/Web/API/Notification.requestPermission).
 
 ```js
-Notification.requestPermission(function (permission) {
+Notification.requestPermission()
+.then(function (permission) {
   console.log(permission); // default, granted, denied
 });
 ```
