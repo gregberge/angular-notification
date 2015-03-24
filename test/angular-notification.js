@@ -72,6 +72,16 @@ describe('Notification provider', function () {
       expect($window.Notification.requestPermission).to.be.called;
       expect($window.Notification.permission).to.equal('granted');
     });
+
+    it('should be possible to request permission', function (done) {
+      $notification.requestPermission()
+      .then(function (permission) {
+        expect(permission).to.equal('granted');
+        done();
+      });
+
+      $window.Notification.respondPermission('granted');
+    });
   });
 
   describe('#$on', function () {

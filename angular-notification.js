@@ -138,9 +138,21 @@ function $notificationProvider() {
         });
     };
 
-    return function $notification(title, options) {
+    /**
+     * Create a new notification.
+     *
+     * @param {string} title
+     * @param {options} options
+     */
+
+    function $notification(title, options) {
       return new NgNotification(title, options);
-    };
+    }
+
+    // Expose requestPermission on $notification.
+    $notification.requestPermission = NgNotification.requestPermission;
+
+    return $notification;
   }
 
   /**
