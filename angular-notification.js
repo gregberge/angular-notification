@@ -52,8 +52,11 @@ function $notificationProvider() {
         }, provider.options || {}, options);
 
         // Create a base notification.
+        try {
         self.baseNotification = new $window.Notification(title, options);
-
+        } catch (error) {
+          return;
+        }
         // Close notification after specified delay.
         if (options.delay) setTimeout(angular.bind(self, self.close), options.delay);
 
