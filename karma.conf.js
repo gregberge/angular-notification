@@ -16,9 +16,9 @@ module.exports = function (config) {
       'bower_components/angular/angular.js',
       'bower_components/angular-mocks/angular-mocks.js',
 
-      'node_modules/sinon/pkg/sinon.js',
+      'bower_components/sinon-1.15.0/index.js',
       'node_modules/chai/chai.js',
-      'node_modules/sinon-chai/lib/sinon-chai.js',
+      'bower_components/sinon-chai/lib/sinon-chai.js',
 
       'angular-notification.js',
       'test/*.js'
