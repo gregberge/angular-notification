@@ -1,6 +1,6 @@
 {
   "name": "angular-notification",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Notification service for Angular using native HTML5 API.",
   "main": "angular-notification.js",
   "directories": {
