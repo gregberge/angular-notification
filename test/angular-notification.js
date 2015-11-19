@@ -52,6 +52,19 @@ describe('Notification provider', function () {
     });
   });
 
+  describe('#getPermission', function () {
+    it('should get current permission', function () {
+      $window.Notification.permission = 'default';
+      expect($notification.getPermission()).to.equal('default');
+
+      $window.Notification.permission = 'granted';
+      expect($notification.getPermission()).to.equal('granted');
+
+      $window.Notification.permission = 'denied';
+      expect($notification.getPermission()).to.equal('denied');
+    });
+  });
+
   describe('#requestPermission', function () {
     it('should request if permission is "default"', function () {
       $window.Notification.permission = 'default';
@@ -134,6 +147,35 @@ describe('Notification provider', function () {
       clock.tick(1001);
 
       expect(notification.baseNotification.close).to.be.called;
+    });
+  });
+});
+
+
+describe('Notification provider', function () {
+  var $window, $notification;
+
+  beforeEach(module('notification'));
+
+  describe('#isSupported', function () {
+    it('should be true if current browser support Notification', function () {
+      inject(function ($injector) {
+        var $window = $injector.get('$window');
+        $window.Notification = {};
+
+        var $notification = $injector.get('$notification');
+        expect($notification.isSupported).to.equal(true);
+      });
+    });
+
+    it('should be false if current browser does not support Notification', function () {
+      inject(function ($injector) {
+        var $window = $injector.get('$window');
+        $window.Notification = undefined;
+
+        var $notification = $injector.get('$notification');
+        expect($notification.isSupported).to.equal(false);
+      });
     });
   });
 });

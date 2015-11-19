@@ -124,6 +124,22 @@ function $notificationProvider() {
     };
 
     /**
+     * Static property to check whether the browser supports Notification or not.
+     * It returns a bool.
+     */
+
+    NgNotification.isSupported = !!$window.Notification;
+
+    /**
+     * Static method to get current permission.
+     * It returns a string.
+     */
+
+    NgNotification.getPermission = function () {
+      return !$window.Notification ? undefined : $window.Notification.permission;
+    };
+
+    /**
      * Static method to request permission.
      * It returns a promise
      */
@@ -152,7 +168,9 @@ function $notificationProvider() {
       return new NgNotification(title, options);
     }
 
-    // Expose requestPermission on $notification.
+    // Expose static members on $notification.
+    $notification.isSupported = NgNotification.isSupported;
+    $notification.getPermission = NgNotification.getPermission;
     $notification.requestPermission = NgNotification.requestPermission;
 
     return $notification;
