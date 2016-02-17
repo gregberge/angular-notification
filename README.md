@@ -113,7 +113,7 @@ var permission = $notification.getPermission(); // default, granted, denied
 A property of bool indicating whether the browser supports the desktop notification feature or not.
 
 ```js
-var isDesktopNotificationSupported = $notification.supported; // true, false
+var isDesktopNotificationSupported = $notification.isSupported; // true, false
 ```
 
 ## License
