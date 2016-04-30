@@ -100,6 +100,22 @@ $notification.requestPermission()
 });
 ```
 
+### $notification.getPermission()
+
+Check the current permission to display notification. It returns a string of one of these values: default, granted, denied. [more info in the official API](https://developer.mozilla.org/en-US/docs/Web/API/Notification/permission).
+
+```js
+var permission = $notification.getPermission(); // default, granted, denied
+```
+
+### $notification.isSupported
+
+A property of bool indicating whether the browser supports the desktop notification feature or not.
+
+```js
+var isDesktopNotificationSupported = $notification.isSupported; // true, false
+```
+
 ## License
 
 MIT
